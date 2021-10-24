@@ -3,7 +3,6 @@
 #include <boost/scope_exit.hpp>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include <gstreamer.h>
 #include <signal.h>
 #include "streamer.h"
 #include <gst/app/gstappsink.h>
