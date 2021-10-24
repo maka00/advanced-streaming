@@ -17,7 +17,7 @@ public:
 
     void StartSink(GstCaps *capablities);
 
-    void StopSink();
+    void StartPlayback();
 
 private:
     static int OnSourceMessage(GstBus *bus, GstMessage *msg, Streamer *self);

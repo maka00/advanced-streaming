@@ -5,8 +5,6 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <signal.h>
 #include "streamer.h"
-#include <gst/app/gstappsink.h>
-#include <gst/app/gstappsrc.h>
 
 
 void exit_handler(int s) {
@@ -28,8 +26,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     std::shared_future<void> sd = done.share();
     Streamer stream;
     stream.StartSource();
-    //GSMain main_object;
-    stream.StopSink();
+    stream.StartPlayback();
     pause();
     SPDLOG_INFO("Application done");
     return 0;

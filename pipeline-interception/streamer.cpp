@@ -102,7 +102,7 @@ int Streamer::OnSinkMessage([[maybe_unused]] GstBus *bus, GstMessage *msg, [[may
     return 0;
 }
 
-void Streamer::StopSink() {
+void Streamer::StartPlayback() {
     gst_element_set_state(source_, GST_STATE_PLAYING);
     g_main_loop_run(loop_);
 }
