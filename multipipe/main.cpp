@@ -26,6 +26,10 @@ void check_mem_usage(const std::string &info) {
     SPDLOG_INFO("[{}] RSS: {}kB\t| SM: {}kB\t| PM: {}kB\t| Max: {}kB", info, rss, shared_mem, rss - shared_mem, max_pm);
 }
 
+gpointer main_loop_runner(gpointer ptr) {
+    g_main_loop_run(reinterpret_cast<GMainLoop *>(ptr));
+}
+
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     static auto console = spdlog::stdout_color_mt("console");
     spdlog::set_pattern("[%H:%M:%S.%e][%s][%!][%#] %v");
@@ -37,6 +41,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     sigaction(SIGINT, &sigIntHandler, nullptr);
 
     gst_init(nullptr, nullptr);
+    auto main_loop = g_main_loop_new(nullptr, false);
+    auto main_thread = g_thread_new("context-gmain", main_loop_runner, main_loop);
+
     GError *err{nullptr};
     auto pipeline = gst_parse_launch_full(
             "videotestsrc is-live=true pattern=11 ! videoconvert ! tee name=t t. ! queue ! fakesink",
@@ -45,7 +52,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     if (err) {
         SPDLOG_ERROR("{}", err->message);
         g_error_free(err);
+        assert(false);
     }
+    gst_element_set_state(pipeline, GST_STATE_PLAYING);
+
     const std::string launch_cmd = ""
                                    "videotestsrc is-live=true pattern=11 "
                                    //"! video/x-raw,width=1280,height=720 "
@@ -110,7 +120,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
         gst_element_set_state(pipeline2, GST_STATE_PLAYING);
     }).detach();
 #endif
+
+
     pause();
+    g_main_loop_quit(main_loop);
+    SPDLOG_INFO("Quiting GStreamer main loop.");
+    main_loop = nullptr;
+    g_thread_join(main_thread);
+    SPDLOG_INFO("Joined GStreamer main thread.");
+    main_thread = nullptr;
     SPDLOG_INFO("Application done");
     return 0;
 }
