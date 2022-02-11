@@ -17,7 +17,7 @@ cb_need_data (GstElement *appsrc,
     GstFlowReturn ret;
     guchar *data1;
     GstMapInfo map;
-    auto img = cv::imread("mk.jpg", cv::IMREAD_COLOR);
+    auto img = cv::imread("./blue_red_example.png", cv::IMREAD_ANYCOLOR | cv::IMREAD_ANYDEPTH);
     height    = img.size().height;
     width     = img.size().width;
     step      = img.step;
@@ -66,9 +66,9 @@ main (gint   argc,
     /* setup */
     g_object_set (G_OBJECT (appsrc), "caps",
                   gst_caps_new_simple ("video/x-raw",
-                                       "format", G_TYPE_STRING, "RGB",
-                                       "width", G_TYPE_INT, 640,
-                                       "height", G_TYPE_INT, 360,
+                                       "format", G_TYPE_STRING, "BGR",
+                                       "width", G_TYPE_INT, 3840,
+                                       "height", G_TYPE_INT, 2160,
                                        "framerate", GST_TYPE_FRACTION, 1, 1,
                                        NULL), NULL);
     gst_bin_add_many (GST_BIN (pipeline), appsrc, conv, videosink, NULL);
