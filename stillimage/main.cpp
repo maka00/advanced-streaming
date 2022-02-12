@@ -28,12 +28,13 @@ cb_need_data(GstElement *appsrc,
     memcpy((guchar *) map.data, data1, gst_buffer_get_size(buffer));
 
     GST_BUFFER_PTS (buffer) = timestamp;
-    GST_BUFFER_DURATION (buffer) = gst_util_uint64_scale_int(1, GST_SECOND, 2);
+    const unsigned int fps = 5;
+    GST_BUFFER_DURATION (buffer) = gst_util_uint64_scale_int(1, GST_SECOND, fps);
 
     timestamp += GST_BUFFER_DURATION (buffer);
 
     g_signal_emit_by_name(appsrc, "push-buffer", buffer, &ret);
-
+    gst_buffer_unref(buffer);
     if (ret != GST_FLOW_OK) {
         g_main_loop_quit(loop);
     }
@@ -45,20 +46,12 @@ cv::Mat loadimage(const std::string &filename) {
 
 const std::string pipeline_cmd = "\
                                   appsrc name=source \
-                                  ! video/x-raw,format=BGR,width=3840,height=2160,framerate=30/1,interlace-mode=progressive\
+                                  ! video/x-raw,format=BGR,width=3840,height=2160,framerate=5/1,interlace-mode=progressive\
                                   ! videoconvert \
-                                  ! video/x-raw,format=YUY2,width=3840,height=2160,framerate=30/1\
+                                  ! video/x-raw,format=YUY2,width=3840,height=2160,framerate=5/1\
                                   ! v4l2sink device=/dev/video4 \
                                  ";
 
-// ! v4l2sink device=/dev/video4
-/*
-                                  ! videoconvert \
-                                  ! video/x-raw,format=I420,width=3840,height=2160,framerate=30/1\
-                                  ! x264enc \
-                                  ! mpegtsmux \
-                                  ! filesink location=test.ts \
- */
 
 gint
 main(gint argc,
