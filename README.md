@@ -52,11 +52,12 @@ use GST_DEBUG_DUMP_DOT_DIR=. to export the pipeline structure.
 [main.cpp][check_mem_usage][27] [Stopped] RSS: 81208kB    | SM: 16376kB   | PM: 64832kB   | Max: 299016kB
 ```
 
-There is a memory leak when one pipeline is stopped and then freed (via gst_object_unref). The expectation was that the
-memory is freed completely after the gst_object_unref. Looks like the memory is still held in the mainloop.
-
 -----------------
 
 ## pipeline-interception
 
 A simple appsrc/appsink example.
+
+## still image
+
+Create a constant stream of an single image. Comparable with the `identity` object, but uses OpenCV
