@@ -12,7 +12,7 @@ conan_basic_setup(TASKS)
 # conan setup is done
 
 if (CMAKE_COMPILER_IS_GNUCC)
-    add_compile_options(-Wall -Wextra )
+    add_compile_options(-Wall -Wextra)
 endif ()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../lib)
@@ -22,4 +22,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../bin)
 add_subdirectory(${PROJECT_SOURCE_DIR}/pipeline-interception)
 add_subdirectory(${PROJECT_SOURCE_DIR}/multipipe)
 add_subdirectory(${PROJECT_SOURCE_DIR}/stillimage)
+add_subdirectory(${PROJECT_SOURCE_DIR}/intercept)
 
