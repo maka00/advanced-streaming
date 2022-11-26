@@ -3,6 +3,7 @@ gtest/1.10.0
 tbb/2020.0
 spdlog/1.9.2
 cxxopts/3.0.0
+boost/1.80.0
 
 [options]
 opencv:contrib=True

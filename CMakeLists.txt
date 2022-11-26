@@ -22,4 +22,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../bin)
 add_subdirectory(${PROJECT_SOURCE_DIR}/pipeline-interception)
 add_subdirectory(${PROJECT_SOURCE_DIR}/multipipe)
 add_subdirectory(${PROJECT_SOURCE_DIR}/stillimage)
+add_subdirectory(${PROJECT_SOURCE_DIR}/thumbnails)
 

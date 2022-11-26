@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
-project(multipipe)
+project(thumbnails)
 
-set(SOURCES main.cpp)
+set(SOURCES main.cpp streamer.cpp)
 
 
 find_package(Threads)
@@ -38,7 +38,6 @@ target_link_directories(${PROJECT_NAME}
         PRIVATE
         ../lib
         )
-
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
         ${CONAN_LIBS}

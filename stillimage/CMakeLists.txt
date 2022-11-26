@@ -7,7 +7,6 @@ set(SOURCES main.cpp)
 find_package(Threads)
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(Boost COMPONENTS filesystem iostreams system program_options timer REQUIRED)
 pkg_check_modules(GStreamer REQUIRED IMPORTED_TARGET gstreamer-1.0)
 pkg_check_modules(GLib REQUIRED IMPORTED_TARGET glib-2.0)
 
@@ -47,9 +46,6 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC
         ${CONAN_LIBS}
         Threads::Threads
-        Boost::program_options
-        Boost::filesystem
-        Boost::timer
         PkgConfig::GStreamer
         PkgConfig::GLib
         libgstapp-1.0.so
